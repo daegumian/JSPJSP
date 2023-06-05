@@ -20,8 +20,12 @@ public class DemoServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		//컨텐츠타입, 인코딩 타입
+		resp.setContentType( "text/html; charset=UTF-8" ); // 내가 쓰려고하는 타입의 텍스트 타입 설정 -> 출력이 : 헬로월드 이렇게 됨
+		//resp.setContentType( "text/plain; charset=UTF-8" ); // 내가 쓰려고하는 타입의 텍스트 타입 설정 -> 출력이 : <b>헬로월드</b>게 됨
 		PrintWriter out = resp.getWriter();
-		out.println("hello world");
+		out.println("<b>헬로월드</b>");
 	}
 
 	@Override

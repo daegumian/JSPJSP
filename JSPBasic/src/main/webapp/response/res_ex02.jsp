@@ -26,8 +26,6 @@
 		
 	</style>
 
-
-
 </head>
 <body>
 
@@ -41,7 +39,6 @@
 	
 	 -->
 
-
 	<div class = "wrap">
 	
 		<form action="res_ex02_result.jsp" method="post" class="box">
@@ -53,14 +50,7 @@
 		
 		</form>
 	
-	
-	
-	
-	
 	</div>
-
-
-
 
 </body>
 </html>

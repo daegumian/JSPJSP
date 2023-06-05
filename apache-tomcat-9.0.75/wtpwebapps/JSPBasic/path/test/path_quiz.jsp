@@ -25,7 +25,10 @@
 	
 	<!-- jsptag폴더 밑에 있는 이미지를 띄워주세요. img태그로 -->
 	
-	<a href="../../jsp/1.jpg">심쿵 준비(상대)</a><br/>	
+	<a href="../../jsp/1.jpg">심쿵 준비1(상대)</a><br/>
+	<img src="/JSPBasic/jsp/2.jpg">심쿵 준비2(절대)
+	
+	<!-- contextPath = 톰캣이 프로젝트를 구분하는 경로 -->
 
 
 

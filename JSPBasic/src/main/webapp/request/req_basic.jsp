@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%
-	String path = request.getContextPath();
+	String path = request.getContextPath(); //현재의 경로를 나타내주는 매서드
 	StringBuffer url = request.getRequestURL();
 	String uri = request.getRequestURI();
 	String remote = request.getRemoteAddr();
