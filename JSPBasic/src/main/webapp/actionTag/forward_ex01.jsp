@@ -16,8 +16,5 @@
 
 	<jsp:forward page="forward_ex01_ok.jsp" />
 	
-	
-	
-
 </body>
 </html>
