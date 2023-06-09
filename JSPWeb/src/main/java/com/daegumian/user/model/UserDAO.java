@@ -12,6 +12,7 @@ public class UserDAO {
 	//싱글톤 형태의 클래스로 생성하는 편이 좋다.
 	//1. 나 자신의 객체를 스태틱으로 선언
 	private static UserDAO instance = new UserDAO();
+	
 	//2. 직접 생성하지 못하도록 생성자 제한
 	private UserDAO() {
 		//생성자에서 드라이버클래스 호출
@@ -81,7 +82,7 @@ public class UserDAO {
 	}
 	
 	//회원가입
-	public void join(userVO vo) {
+	public void join(UserVO vo) {
 		
 		String sql = "insert into users(id, pw, name, email, gender) values(?, ?, ?, ?, ?)";
 	
@@ -100,7 +101,6 @@ public class UserDAO {
 			
 			pstmt.executeUpdate(); //성공시 1, 실패시 0 //특별한 처리를 할 것이 아니기 때문에 여기까지.
 			
-			
 		} catch (Exception e) {
 		}finally {
 			try {
@@ -110,16 +110,13 @@ public class UserDAO {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
 	}
 	
 	//로그인
-	public userVO login(String id, String pw) {
+	public UserVO login(String id, String pw) {
 		
 		//로그인 성공이면 VO객체가 반환, 로그인 실패면 null값이 반환
-		userVO vo = null;
+		UserVO vo = null;
 		
 		String sql = "select * from users where id = ? and pw =?";
 		
@@ -145,10 +142,9 @@ public class UserDAO {
 				String gender = rs.getString("gender");
 				Timestamp regdate = rs.getTimestamp("regdate");
 			
-				vo = new userVO(id2, null, name, email, gender, regdate);
+				vo = new UserVO(id2, null, name, email, gender, regdate);
 			
 			}
-			
 			
 		} catch (Exception e) {
 		}finally {
@@ -163,7 +159,90 @@ public class UserDAO {
 		return vo; 
 	}
 	
+	//회원정보 조회
+	public UserVO getInfo(String id) {
+		
+		UserVO vo = null;
+		
+		String sql = "select * from users where id = ?";
+		
+		Connection conn = null;
+		PreparedStatement pstmt= null;
+		ResultSet rs = null;
+		
+		try {
+			
+		conn = DriverManager.getConnection(url, uid, upw);
+		
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, id); //id
+		
+		rs = pstmt.executeQuery();
+			
+		if(rs.next()) { // id는 pk라서 1행
+			
+			String id2 = rs.getString("id");
+			String name = rs.getString("name");
+			String email = rs.getString("email");
+			String gender = rs.getString("gender");
+			
+			vo = new UserVO(id2, null, name, email, gender, null);
+			
+		}
+		
+		} catch (Exception e) {
+		}finally {
+			try {
+				conn.close();
+				pstmt.close();
+				rs.close();
+			} catch (Exception e2) {
+			}
+		}
+		
+		return vo;
+	}
 
+	//회원업데이트 동훈
+	public int updateInfo(UserVO vo) {
+		
+		int result = 0;
+		String sql = "update users set pw = ?, name = ?, email = ?, gender = ? where id = ?";
+		Connection conn = null;
+		PreparedStatement pstmt= null;
+		
+		try {
+			
+			conn = DriverManager.getConnection(url, uid, upw);
+			pstmt = conn.prepareStatement(sql);
+			
+				//물음표 순서대로
+				pstmt.setString(1, vo.getPw());
+				pstmt.setString(2, vo.getName());
+				pstmt.setString(3, vo.getEmail());
+				pstmt.setString(4, vo.getGender());
+				pstmt.setString(5, vo.getId());
+			
+		result = pstmt.executeUpdate(); //성공시 1, 실패시 0 //특별한 처리를 할 것이 아니기 때문에 여기까지.
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+		
+	}
+
+
+
+	
 	
 	
 }

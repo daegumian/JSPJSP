@@ -1,6 +1,8 @@
 package com.daegumian.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.daegumian.user.model.userVO;
+import com.daegumian.user.model.UserVO;
 import com.daegumian.user.service.UserService;
 import com.daegumian.user.service.UserServiceImpl;
 
@@ -49,6 +51,9 @@ public class UserController extends HttpServlet {
 		
 		//필요한 객체를  if문 바깥에 선언.  V
 		UserService service = new UserServiceImpl();
+		
+		//세션에 회원정보 저장하는 방법 (여러 곳에 쓰기 위해 멤버변수로 선언)
+		HttpSession session = request.getSession();//(***암기)
 		
 		if(command.equals("/index.user")){
 			
@@ -91,7 +96,7 @@ public class UserController extends HttpServlet {
 		//로그인 기능
 		}	else if(command.equals("/user/loginForm.user")) {
 				
-				userVO vo = service.login(request, response);
+				UserVO vo = service.login(request, response);
 				
 				if(vo == null) { //로그인 실패
 					
@@ -99,25 +104,59 @@ public class UserController extends HttpServlet {
 					request.getRequestDispatcher("user_login.jsp").forward(request, response);
 					
 				}else {//로그인 성공
-					//세션에 회원정보 저장하는 방법
-					HttpSession session = request.getSession();//(***암기)
 					session.setAttribute("user_id", vo.getId());
 					session.setAttribute("user_name", vo.getName());
-					
 					response.sendRedirect("user_mypage.user");
-					
 				}
-				
+			
+		//나의정보 화면		
 			} else if(command.equals("/user/user_mypage.user")) {
 				request.getRequestDispatcher("user_mypage.jsp").forward(request, response);
 			}
 		
+		//로그아웃 기능
 			else if(command.equals("/user/user_logout.user")) {
-				
-				HttpSession session = request.getSession();
 				session.invalidate();
-				
 				request.getRequestDispatcher("user_logout.jsp").forward(request, response);
+			}
+		//회원정보수정 기능	
+			else if(command.equals("/user/user_modify.user")) {
+				
+				//회원정보를 가지고 감
+				
+				UserVO vo = service.getInfo(request, response);
+				request.setAttribute("vo", vo);
+				
+				request.getRequestDispatcher("user_modify.jsp").forward(request, response);
+			}
+		
+		//정보 수정
+			else if(command.equals("/user/user_update.user")) {
+				
+				int result = service.updateInfo(request, response);
+				
+				if(result == 1) { //수정 성공
+					
+					String name = request.getParameter("name");
+					session.setAttribute("user_name", name);
+					
+					//out객체를 이용한 메시지 전달 //PrintWriter -> 출력함
+					response.setContentType("text/html; charset=utf-8;");
+					PrintWriter out = response.getWriter();
+					out.println("<script>");
+					out.println("alert('수정 성공했어요');");
+					out.println("location.href='user_mypage.user';");
+					out.println("</script>");
+					
+				}else { //수정 실패
+					System.out.println(result);
+					
+					response.sendRedirect("user_modify.user");
+					
+				}
+				
+				
+				
 			}
 		
 		

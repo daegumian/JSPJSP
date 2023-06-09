@@ -68,7 +68,7 @@
 	                        <a href="<%=request.getContextPath() %>/member/member.user">Member</a>
 	                    </li>
 	                    <li>
-	                        <a href="">BOARD</a>
+	                        <a href="<%=request.getContextPath()%>/board/board_list.board">BOARD</a>
 	                    </li>
 	                    
 	                    <!-- 로그인 되어 있으면 모습 바꾸기 -> jstl 선언문을 최상단에 추가하기 & 라이브러리도 추가하기-->
