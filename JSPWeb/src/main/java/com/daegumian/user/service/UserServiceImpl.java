@@ -68,7 +68,6 @@ public class UserServiceImpl implements UserService {
 		UserDAO dao = UserDAO.getInstance();
 		UserVO vo = dao.getInfo(id);
 		
-		
 		return vo;
 	}
 
@@ -82,14 +81,15 @@ public class UserServiceImpl implements UserService {
 		 * 2. 성공실패 여부를 컨트롤러로 반환 받기.
 		 * 3. 수정 성공시에는 mypage로 리다이렉트, 실패시에도 modify로 리다이렉트
 		 * 		(값을 가져갈게 없기 때문에 리다이렉트로 보냄)
-		 * 
 		 * */
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String gender = request.getParameter("gender");
+		
 		UserVO vo = new UserVO(id, pw, name, email, gender, (Timestamp)null);
+		
 		//dao객체
 		UserDAO dao = UserDAO.getInstance();
 		int result = dao.updateInfo(vo);

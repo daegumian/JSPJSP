@@ -15,7 +15,6 @@
 		
 		<a href="#">회원탈퇴</a>
 	
-	
 	</div>
 
 </section>

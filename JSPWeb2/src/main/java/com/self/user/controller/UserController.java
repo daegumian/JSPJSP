@@ -1,6 +1,8 @@
 package com.self.user.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -97,10 +99,50 @@ public class UserController extends HttpServlet {
 				session.setAttribute("user_name", vo.getName());
 				response.sendRedirect("user_mypage.jsp");
 			}
+		//나의정보 화면	
+		}else if(command.equals("/user/user_mypage.user")) {
+			request.getRequestDispatcher("user_mypage.jsp").forward(request, response);
+		
+		//로그아웃 기능
+		}else if(command.equals("/user/user_logout.user")) {
+			session.invalidate();
+			request.getRequestDispatcher("user_logout.jsp").forward(request, response);
+		
+		//회원정보수정 기능
+		}else if(command.equals("/user/user_modfy.user")) {
 			
+			//회원정보를 가지고 감
+			UserVO vo = service.getInfo(request, response);
+			request.setAttribute("vo", vo);
 			
+			request.getRequestDispatcher("user_modify.jsp").forward(request, response);
+		
+		}else if(command.equals("/user/user_update.user")) {
 			
+			int result = service.updateInfo(request, response);
+			
+			if(result == 1) { // 수정 성공
+				
+				String name = request.getParameter("name");
+				session.setAttribute("user_name", name);
+				
+				//out객체를 이용한 메시지 전달 //PrintWriter -> 출력한
+				response.setContentType("text/html; charset=utf-8;");
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('수정 성공했어요');");
+				out.println("location.href='user_mypage.user';");
+				out.println("</script>");
+				
+			}else { //수정 실패
+				System.out.println(result);
+				
+				response.sendRedirect("user_modify.jsp");
+			}
+			
+		
 		}
+		
 		
 		
 		

@@ -203,7 +203,7 @@ public class UserDAO {
 		return vo;
 	}
 
-	//회원업데이트 동훈
+	//회원업데이트
 	public int updateInfo(UserVO vo) {
 		
 		int result = 0;

@@ -77,7 +77,7 @@
 	                    
 		                    <c:when test="${sessionScope.user_id != null }">
 			                    <li>
-			                        <a href="<%=request.getContextPath() %>/user/user_mypage.user">나의정보관리</a>
+			                        <a href="<%=request.getContextPath() %>/user/user_mypage.user">MYPAGE</a>
 			                    </li>
 			                    <li>
 			                        <a href="<%=request.getContextPath() %>/user/user_logout.user" style="color:red">LOGOUT</a> <!-- 컨트롤러 타고가게 하기 -->
@@ -91,9 +91,7 @@
 			                    <li>
 			                        <a href="<%=request.getContextPath() %>/user/user_join.user" style="color:red">JOIN</a> <!-- 컨트롤러 타고가게 하기 -->
 			                    </li>
-			                    
 		                    </c:otherwise>
-	                   
 	                    
 	                    </c:choose>
 	                    

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <head>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -73,12 +74,28 @@
                     <li>
                         <a href="">BOARD</a>
                     </li>
-                    <li>
-                        <a href="<%=request.getContextPath() %>/user/user_login.user">LOGIN</a>
-                    </li>
-                    <li>
-                        <a href="<%=request.getContextPath() %>/user/user_join.user" style="color:red">JOIN</a>
-                    </li>
+                    
+                    <c:choose>
+                    
+                    	<c:when test = "${sessionScope.user_id != null }">
+		                    <li>
+		                        <a href="<%=request.getContextPath() %>/user/user_mypage.user">MYPAGE</a>
+		                    </li>
+		                    <li>
+		                        <a href="<%=request.getContextPath() %>/user/user_logout.user" style="color:red">LOGOUT</a>
+		                    </li>
+                    	</c:when>
+                    	
+                    	<c:otherwise>
+		                    <li>
+		                        <a href="<%=request.getContextPath() %>/user/user_login.user">LOGIN</a>
+		                    </li>
+		                    <li>
+		                        <a href="<%=request.getContextPath() %>/user/user_join.user" style="color:red">JOIN</a>
+		                    </li>
+                    	</c:otherwise>
+                    	
+                    </c:choose>
                 </ul>
             </div>
             

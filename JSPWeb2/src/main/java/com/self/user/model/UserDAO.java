@@ -167,5 +167,97 @@ public class UserDAO {
 
 	    return vo;
 	}
+
+	//회원정보 조회
+	public UserVO getInfo(String id) {
+		
+		UserVO vo = null;
+		
+		String sql = "select * from users2 where id = ?";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DriverManager.getConnection(url,uid,upw);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id); //id
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				
+				String id2 = rs.getString("id");
+				String name = rs.getString("name");
+				String email = rs.getString("email");
+				String gender = rs.getString("gender");
+				
+				vo = new UserVO(id2, null, name, email, gender, null);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+				pstmt.close();
+				rs.close();
+			} catch (Exception e2) {
+			}
+		}
+		
+		return vo;
+		
+	}
+	
+	//회원정보 수정
+	public int updateInfo(UserVO vo) {
+		
+		int result = 0;
+		
+		String sql = "update users2 set pw = ?, name = ?, email = ?, gender = ? where id = ?";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			conn = DriverManager.getConnection(url,uid,upw);
+			pstmt = conn.prepareStatement(sql);
+			
+			//
+			pstmt.setString(1, vo.getPw());
+			pstmt.setString(2, vo.getName());
+			pstmt.setString(3, vo.getEmail());
+			pstmt.setString(4, vo.getGender());
+			pstmt.setString(5, vo.getId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+				pstmt.close();
+			} catch (Exception e2) {
+			}
+		}
+		
+		return result;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
