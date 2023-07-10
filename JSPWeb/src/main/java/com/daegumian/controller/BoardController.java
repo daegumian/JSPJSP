@@ -75,6 +75,8 @@ public class BoardController extends HttpServlet {
 		
 		//수정 화면
 		}else if(command.equals("/board/board_modify.board")) {
+			
+			
 			//getContent : bno 를 필요로 함. 화면에서 bno를 넘기기 위해, 키=값 을 받아와야함.
 			BoardVO vo = service.getContent(request, response);
 			request.setAttribute("vo", vo);//어차피 같은 내용을 바꾸는 것이니깐
@@ -97,9 +99,6 @@ public class BoardController extends HttpServlet {
 		}
 		
 	
-		
-		
-		
 
 	}
 

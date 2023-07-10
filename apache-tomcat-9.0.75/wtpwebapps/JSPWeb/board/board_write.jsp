@@ -7,12 +7,17 @@
 	<h3>게시판 글 작성 페이지</h3>
 	<hr>
 	
+	<!-- 
+	로그인 된 사람만 작성페이지에 진입할 수 있고
+	작성자는 세션값을 고정
+	 -->
+	
 	<form action="registForm.board" method="post">
 		<table border="1" width="500">
 			<tr>
 				<td>작성자</td>
 				<td>
-					<input type="text" name="writer" size="10">
+					<input type="text" name="writer" value="${sessionScope.user_id }" readonly = "readonly" size="10">
 				</td>
 			</tr>
 			<tr>

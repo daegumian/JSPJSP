@@ -38,6 +38,11 @@
 		width: 100%; 
 		z-index: 10;
 	}
+	
+	.footer-text {
+    color: red;
+	}
+
 	</style>
     
     

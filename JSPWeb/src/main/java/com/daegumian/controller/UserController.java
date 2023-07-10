@@ -122,6 +122,12 @@ public class UserController extends HttpServlet {
 		//회원정보수정 기능	
 			else if(command.equals("/user/user_modify.user")) {
 				
+//				if(session.getAttribute("user_id") == null) {
+//					response.sendRedirect("user_login.user");
+//					return;
+//				}
+				
+				
 				//회원정보를 가지고 감
 				
 				UserVO vo = service.getInfo(request, response);
@@ -132,7 +138,7 @@ public class UserController extends HttpServlet {
 		
 		//정보 수정
 			else if(command.equals("/user/user_update.user")) {
-				
+			
 				int result = service.updateInfo(request, response);
 				
 				if(result == 1) { //수정 성공
@@ -154,7 +160,6 @@ public class UserController extends HttpServlet {
 					response.sendRedirect("user_modify.user");
 					
 				}
-				
 				
 				
 			}

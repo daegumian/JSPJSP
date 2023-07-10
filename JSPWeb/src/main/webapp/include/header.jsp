@@ -65,7 +65,7 @@
 	                        <a href="<%=request.getContextPath() %>/index.user">HOME</a>
 	                    </li>
 	                    <li>
-	                        <a href="<%=request.getContextPath() %>/member/member.user">Member</a>
+	                        <a href="<%=request.getContextPath() %>/member/member.user">MEMBER</a>
 	                    </li>
 	                    <li>
 	                        <a href="<%=request.getContextPath()%>/board/board_list.board">BOARD</a>
